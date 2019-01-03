@@ -1,6 +1,6 @@
 # pytracks
 
-Procedures for measuring and counting fission tracks in minerals are time-consuming and involve practical problems.
+Procedures for measuring and counting fission tracks in minerals are time-consuming and involve practical problems, such as the observer efficiency.
 
 This is pytracks, a package based on numpy, scipy, scikit-image and other packages, that is capable of counting these tracks automatically.
 
