@@ -144,9 +144,18 @@ def angles_between_points(points):
 
 
 def clear_rd_border(image):
-    """
-    """
+    """Clears the elements in the right and low borders in an input image.
 
+    Parameters
+    ----------
+    image : array
+        Binary input image.
+
+    Returns
+    -------
+    image_clear : array
+        Binary image with no elements in the right and low borders.
+    """
     aux = np.pad(image, ([1, 0], [1, 0]), mode='constant')
     aux = clear_border(aux)
 
