@@ -34,6 +34,7 @@ from skimage.feature import canny
 from skimage.io import imread
 from skimage.measure import CircleModel, EllipseModel, find_contours, \
                             label, regionprops
+from skimage.segmentation import clear_border
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -140,6 +141,16 @@ def angles_between_points(points):
         angles.append(atan2(d_col, d_row))
 
     return angles
+
+
+def clear_rd_border(image):
+    """
+    """
+
+    aux = np.pad(image, ([1, 0], [1, 0]), mode='constant')
+    aux = clear_border(aux)
+
+    return aux[:-2, 1:]
 
 
 def edge_coordinates(image, alg='log', sigma=0.5):
@@ -582,69 +593,7 @@ def progress_bar(prog, mesg='Please wait...'):
 
     print(' '*int(40), end='')  # resetting current message
     print('\r[{0}{1}] {2}% - '.format('#'*int(prog/10), ' '*int((100-prog)/10),
-          prog) + str(mesg), end='')
-
-    return None
-
-
-def save_info_uwt(bin_h, bin_v, bin_d, stk_plot='n', alg='o'):
-    """
-    saveinfouwt(bin_h, bin_v, bin_d, stk_plot='n', alg='o')
-
-    Saves UWT results.
-    """
-
-    _, _, dep, lev = np.shape(bin_h)
-
-    for num in range(lev):
-        if str(stk_plot) is 'y':  # plotting stack
-            showstackcont(bin_h[:, :, :, num], cm.gray)
-            plt.savefig('stackbin_h'+str(alg)+str(num)+'.png',
-                        bbox_inches='tight')
-            showstackcont(bin_v[:, :, :, num], cm.gray)
-            plt.savefig('stackbin_v'+str(alg)+str(num)+'.png',
-                        bbox_inches='tight')
-            showstackcont(bin_d[:, :, :, num], cm.gray)
-            plt.savefig('stackbin_d'+str(alg)+str(num)+'.png',
-                        bbox_inches='tight')
-
-        # plotting cross sections:
-        showcrosstest(bin_h[:, :, :, num], cm.gray)
-        plt.savefig('crossbin_h'+str(alg)+str(num)+'.png',
-                    bbox_inches='tight')
-        showcrosstest(bin_v[:, :, :, num], cm.gray)
-        plt.savefig('crossbin_v'+str(alg)+str(num)+'.png',
-                    bbox_inches='tight')
-        showcrosstest(bin_d[:, :, :, num], cm.gray)
-        plt.savefig('crossbin_d'+str(alg)+str(num)+'.png',
-                    bbox_inches='tight')
-
-    plt.close('all')
-
-    return None
-
-
-def show_stack_cont(stack, color_map=cm.YlGnBu):
-    """
-    showstackcont(stack, color_map=cm.YlGnBu)
-
-    Presents the stack visualization based
-    on contours.
-    """
-
-    row, col, dep = np.shape(stack)
-
-    x = np.linspace(0, row, row)
-    y = np.linspace(0, col, col)
-    xx, yy = np.meshgrid(x, y)
-
-    fig = plt.figure()
-    ax = fig.gca(projection='3d')
-    ax.set_zlim(-(dep+1), 1)
-
-    for curr_dep in range(dep):
-        ax.contourf(xx, yy, np.transpose(stack[:, :, curr_dep]),
-                    zdir='z', offset=-curr_dep, cmap=color_map)
+                                      prog) + str(mesg), end='')
 
     return None
 
