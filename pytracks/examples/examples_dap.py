@@ -95,7 +95,3 @@ def helping_window(title='default', message='default'):
     window.destroy()
 
     return None
-
-
-example_dap()
-
