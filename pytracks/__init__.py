@@ -4,6 +4,7 @@
 
 name = "pytracks"
 
+import pytracks.data
 import pytracks.labeling
 import pytracks.misc
 import pytracks.preproc

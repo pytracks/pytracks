@@ -2,9 +2,11 @@ import data
 import matplotlib.pyplot as plt
 import tkinter as tk
 
+from processing import segmentation_wusem
 from scipy.ndimage.morphology import binary_fill_holes
 from skimage import io
 from skimage.filters import threshold_isodata
+from tools import clear_rd_border, enumerate_objects
 from tkinter import messagebox
 
 
@@ -32,18 +34,40 @@ def example_dap():
     image_labels, _, _ = segmentation_wusem(image_bin,
                                             initial_radius=10,
                                             delta_radius=2)
-    plt.imshow(image_labels, cmap='gray')
+    plt.imshow(image_labels, cmap='nipy_spectral')
     plt.show()
 
     # Step 4. Clearing the right and lower borders.
     helping_window(TITLE_WINDOWS, 'Clearing tracks in right and lower borders.')
     image_labels = clear_rd_border(image_labels)
-    plt.imshow(image_labels, cmap='gray')
+    plt.imshow(image_labels, cmap='nipy_spectral')
     plt.show()
 
     # Step 5. Enumerating objects.
     helping_window(TITLE_WINDOWS, 'Enumerating objects found in the image.')
-    img_numbers = enumerate_objects(image, img_labels, font_size=25)
+    image_numbers = enumerate_objects(labels=image_labels, font_size=25)
+    plt.imshow(image_numbers)
+    plt.show()
+
+    return None
+
+
+def example_dap_slide():
+    """
+    """
+
+    master = tk.Tk()
+
+    def show_values():
+        print(init_rad.get(), delta_rad.get())
+
+    init_rad = tk.Scale(master, from_=1, to=50, orient=tk.HORIZONTAL, command=show_values)
+    init_rad.pack()
+
+    delta_rad = tk.Scale(master, from_=1, to=10, orient=tk.HORIZONTAL, command=show_values)
+    delta_rad.pack()
+
+    tk.mainloop()
 
     return None
 

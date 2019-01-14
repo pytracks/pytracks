@@ -1,6 +1,4 @@
-from .example_apatite import ex_apatite
-from .example_dap import ex_dap
+from .examples_dap import example_dap
 
 
-__all__ = ['ex_apatite',
-           'ex_dap']
+__all__ = ['example_dap']

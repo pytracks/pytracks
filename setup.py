@@ -14,7 +14,7 @@ setuptools.setup(
             'matplotlib',
             'numpy',
             'scipy',
-            'skimage'
+            'scikit-image'
     ],
     long_description=long_description,
     long_description_content_type = 'text/markdown',
